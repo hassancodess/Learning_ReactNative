@@ -7,7 +7,7 @@ const Wish = ({item}) => {
       <Text style={styles.wishText}>{item.text}</Text>
       <View style={styles.actionsContainer}>
         <Text style={styles.actionButton}>Edit</Text>
-        <Text style={styles.actionButton}>Delete</Text>
+        <Text style={[styles.actionButton, {marginRight: 0}]}>Delete</Text>
       </View>
     </View>
   );
@@ -36,6 +36,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   actionButton: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     marginRight: 10,
+    backgroundColor: 'green',
+    borderRadius: 5,
   },
 });
