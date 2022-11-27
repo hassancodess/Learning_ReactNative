@@ -1,10 +1,17 @@
+import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {TextInput} from 'react-native-paper';
 
 const Register = () => {
+  const [name, setName] = React.useState('');
+
   return (
     <View>
-      <Text>Register</Text>
+      <TextInput
+        label="Enter Email"
+        value={name}
+        onChangeText={text => setText(text)}
+      />
     </View>
   );
 };
