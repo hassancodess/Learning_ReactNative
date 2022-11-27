@@ -2,4 +2,4 @@
 
 ## Screenshots
 
-![Alt text](./src/assets/screenshot.jpeg)
+![Alt text](./preview.png)
