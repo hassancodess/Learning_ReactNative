@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Platform, StatusBar, Alert} from 'react-native';
 import {TextInput, RadioButton, Checkbox, Button} from 'react-native-paper';
 import {Picker} from '@react-native-picker/picker';
+import {openDatabase} from 'react-native-sqlite-storage';
+
+const db = openDatabase({name: 'EmploymentForm.db'});
 
 const App = () => {
   const [name, setName] = useState('');
@@ -14,6 +17,10 @@ const App = () => {
     friends: false,
     newspaper: false,
   });
+
+  useEffect(() => {
+    CREATE_TABLE();
+  }, []);
 
   const updateSocialMediaState = () => {
     setChecked(prev => ({...prev, socialMedia: !prev.socialMedia}));
@@ -35,27 +42,43 @@ const App = () => {
     return string.slice(0, -2);
   };
 
-  const handleSubmit = () => {
-    Alert.alert(
-      'Do you wanna submit this form with the following values ?',
-      `
-      Name: ${name}
-      Number: ${number}
-      Qualification ${selectedQualification}
-      Job Title: ${selectedJob}
-      Gender: ${gender}
-      Job Infromation from  ${getCheckedValues()}`,
-      [
-        {
-          text: 'Cancel',
-          onPress: () => {
-            console.log('Cancel Pressed');
-          },
-          style: 'cancel',
+  const CREATE_TABLE = () => {
+    let query =
+      'CREATE TABLE IF NOT EXISTS Employee (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT , number TEXT, qualification TEXT, jobtype TEXT, gender TEXT, jobinformation TEXT)';
+    db.transaction(txn => {
+      txn.executeSql(
+        query,
+        [],
+        (tx, res) => {
+          console.log('Employee Table Created');
         },
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ],
-    );
+        error => {
+          console.log('ERROR');
+        },
+      );
+    });
+  };
+
+  const ADD_EMPLOYEE = () => {
+    let query =
+      'INSERT INTO Employee(name, number, qualification, jobtype, gender, jobinformation) VALUES(?,?,?,?,?,?)';
+    let jobInf = getCheckedValues();
+    db.transaction(txn => {
+      txn.executeSql(
+        query,
+        [name, number, selectedQualification, selectedJob, gender, jobInf],
+        (tx, res) => {
+          console.log('Employee ADDED', res);
+        },
+        error => {
+          console.log('ERROR', error);
+        },
+      );
+    });
+  };
+
+  const handleSubmit = () => {
+    ADD_EMPLOYEE();
   };
 
   return (
@@ -73,7 +96,7 @@ const App = () => {
         />
         <TextInput
           style={styles.emailContainer}
-          label="Enter Email"
+          label="Enter Number"
           value={number}
           onChangeText={text => setNumber(text)}
         />
