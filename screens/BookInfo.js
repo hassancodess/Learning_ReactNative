@@ -1,39 +1,8 @@
 import {StyleSheet, Text, View, FlatList, Pressable} from 'react-native';
 import React from 'react';
-// import {books} from '../data/data';
+import {books} from '../data/data';
 
 const BookInfo = ({navigation}) => {
-  const books = [
-    {
-      title: 'C#',
-      pages: 200,
-      author: 'Robert',
-      publisher: 'XYZ',
-      price: 1000,
-    },
-    {
-      title: 'Java',
-      pages: 200,
-      author: 'Robert',
-      publisher: 'XYZ',
-      price: 1000,
-    },
-    {
-      title: 'JavaScript',
-      pages: 200,
-      author: 'Robert',
-      publisher: 'XYZ',
-      price: 1000,
-    },
-    {
-      title: 'Python',
-      pages: 200,
-      author: 'Robert',
-      publisher: 'XYZ',
-      price: 1000,
-    },
-  ];
-
   const Item = ({item}) => {
     const onPressHandler = () => {
       navigation.navigate('BookDetails', {
