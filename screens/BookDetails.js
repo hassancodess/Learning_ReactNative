@@ -3,6 +3,8 @@ import React from 'react';
 
 const BookDetails = ({route}) => {
   const {item} = route.params;
+  const obj = route.params;
+  obj.item.title;
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{item.title}</Text>
