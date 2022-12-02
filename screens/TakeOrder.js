@@ -18,31 +18,12 @@ const TakeOrder = () => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    // console.log('FETCH DISTINCT FLAVOUR useEffect');
     FETCH_DISTINCT_FLAVOURS();
   }, []);
 
   useEffect(() => {
-    // console.log('FETCH DISTINCT SIZES useEffect');
     FETCH_DISTINCT_SIZES();
   }, [selectedFlavour]);
-
-  // useEffect(() => {
-  //   // console.log('CURRENT', currentOrderPrice);
-  //   let orderTotal = currentOrderPrice * parseInt(quantity);
-  //   console.log('ORDER TOTAL: ', orderTotal);
-  //   setTotalPrice(prev => prev + orderTotal);
-  //   // let total = orders.reduce((acc, obj) => {
-  //   //   return acc + parseInt(obj.price);
-  //   // }, 0);
-
-  //   // setTotalPrice(total);
-  // }, [orders]);
-
-  // useEffect(() => {
-  //   console.log('TYPE OF TOTAL PRICE', typeof totalPrice);
-  //   console.log('TOTAL PRICE', totalPrice);
-  // }, [totalPrice]);
 
   useEffect(() => {
     console.log(orders);
@@ -68,7 +49,6 @@ const TakeOrder = () => {
       quantity,
     };
     setOrders(prev => [...prev, order]);
-    // setQuantity(0);
   };
 
   const FETCH_PIZZA_PRICE = () => {
