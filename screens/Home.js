@@ -8,6 +8,7 @@ const db = openDatabase({name: 'PizzaDatabase.db'});
 const Home = ({navigation}) => {
   useEffect(() => {
     CREATE_TABLE();
+    // DROP_TABLE();
   }, []);
 
   const CREATE_TABLE = () => {
@@ -21,7 +22,22 @@ const Home = ({navigation}) => {
           console.log('Pizza Table Created Successfully');
         },
         error => {
-          console.log('ERROR');
+          console.log('TABLE CREATION ERROR');
+        },
+      );
+    });
+  };
+  const DROP_TABLE = () => {
+    let query = 'DROP TABLE IF EXISTS Pizza';
+    db.transaction(txn => {
+      txn.executeSql(
+        query,
+        [],
+        (tx, res) => {
+          console.log('Table Dropped');
+        },
+        error => {
+          console.log('TABLE DROPPED ERROR');
         },
       );
     });
@@ -53,7 +69,6 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3D5656',
     justifyContent: 'center',
   },
   button: {

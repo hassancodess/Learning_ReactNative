@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ToastAndroid} from 'react-native';
 import {TextInput, RadioButton, Button} from 'react-native-paper';
 import React, {useState} from 'react';
 import {openDatabase} from 'react-native-sqlite-storage';
@@ -17,6 +17,7 @@ const NewPizza = () => {
         query,
         [flavour, size, price],
         (tx, res) => {
+          console.log(res);
           ToastAndroid.show(
             'New Pizza Added Successfully!',
             ToastAndroid.SHORT,
@@ -35,7 +36,7 @@ const NewPizza = () => {
   };
 
   const clearFields = () => {
-    setFlavour();
+    setFlavour('');
     setSize('S');
     setPrice('');
   };
@@ -53,6 +54,7 @@ const NewPizza = () => {
         </View>
         {/* Size */}
         <View style={styles.size}>
+          <Text style={styles.text}>Size</Text>
           <RadioButton.Group
             onValueChange={value => setSize(value)}
             value={size}>
@@ -84,10 +86,8 @@ export default NewPizza;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // padding: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    // overflow: 'hidden',
   },
   innerContainer: {
     width: '90%',
@@ -96,9 +96,10 @@ const styles = StyleSheet.create({
   flavour: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-around',
   },
   input: {
-    width: '100%',
+    width: '70%',
   },
   text: {
     fontSize: 18,
@@ -106,13 +107,15 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   size: {
-    width: '40%',
-    alignSelf: 'center',
+    width: '70%',
     marginVertical: 20,
+    flexDirection: 'row',
+    marginLeft: 18,
   },
   price: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-around',
   },
   button: {
     marginTop: 40,
