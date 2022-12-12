@@ -3,12 +3,12 @@ import {Button} from 'react-native-paper';
 import React, {useEffect} from 'react';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import {Directions} from 'react-native-gesture-handler';
-import {openDatabase} from 'react-native-sqlite-storage';
-const db = openDatabase({name: 'productDatabase.db'});
+// import {openDatabase} from 'react-native-sqlite-storage';
+// const db = openDatabase({name: 'productDatabase.db'});
 export default function Home({navigation}) {
-  useEffect(() => {
-    createTable();
-  }, []);
+  // useEffect(() => {
+  //   createTable();
+  // }, []);
   const createTable = () => {
     const query =
       'Create Table if not Exists Products(id integer primary key autoincrement,name varchar(20),price integer,company varchar(30),unit varchar(20))';
