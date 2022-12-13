@@ -2,4 +2,4 @@
 
 ## Screenshots
 
-[!Alt Text](./preview.png)
+![Alt text](./preview.png)
