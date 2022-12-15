@@ -62,16 +62,16 @@ const App = () => {
 
   const captureImage = async type => {
     console.log('Capture Image ');
-    let options = {
-      mediaType: type,
-      maxWidth: 300,
-      maxHeight: 550,
-      quality: 1,
-      videoQuality: 'low',
-      durationLimit: 30, //Video max duration in seconds
-      saveToPhotos: true,
-      includeBase64: true,
-    };
+      let options = {
+        mediaType: type,
+        maxWidth: 300,
+        maxHeight: 550,
+        quality: 1,
+        videoQuality: 'low',
+        durationLimit: 30, //Video max duration in seconds
+        saveToPhotos: true,
+        includeBase64: true,
+      };
     let isCameraPermitted = await requestCameraPermission();
     let isStoragePermitted = await requestExternalWritePermission();
     if (isCameraPermitted && isStoragePermitted) {
