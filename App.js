@@ -1,26 +1,36 @@
-import React from 'react';
-import {StyleSheet, View, Text, Pressable} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
+import {TextInput, RadioButton} from 'react-native-paper';
+import React, {useState} from 'react';
 
-import {NavigationContainer} from '@react-navigation/native';
+const App = () => {
+  const [salary, setSalary] = useState('');
+  const [gender, setGender] = useState('');
+  const [tax, setTax] = useState('');
+  const [amountAfterTax, setAmountAfterTax] = useState('');
 
-import {createStackNavigator} from '@react-navigation/stack';
-
-import Add from './Add';
-import Search from './Search';
-import Update from './Update';
-import Delete from './Delete';
-import Home from './Home';
-const Stack = createStackNavigator();
-export default App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Add" component={Add} />
-        <Stack.Screen name="Search" component={Search} />
-        <Stack.Screen name="Update" component={Update} />
-        <Stack.Screen name="Delete" component={Delete} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <View style={styles.root}>
+      <View style={styles.salaryContainer}>
+        <TextInput />
+        <Text>App</Text>
+      </View>
+      <View style={styles.salaryContainer}>
+        <Text>Gender</Text>
+        <RadioButton.Group
+          onValueChange={newValue => setGender(newValue)}
+          value={gender}>
+          <RadioButton.Item label="Male" value="Male" />
+          <RadioButton.Item label="Female" value="Female" />
+        </RadioButton.Group>
+      </View>
+    </View>
   );
 };
+
+export default App;
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+});
