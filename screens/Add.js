@@ -12,16 +12,13 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {openDatabase} from 'react-native-sqlite-storage';
 const db = openDatabase({name: 'ProductDatabase.db'});
 
-const Add = () => {
+const Add = ({navigation}) => {
   const [name, setName] = useState('');
 
   const [filePath, setFilePath] = useState({});
   useEffect(() => {
     CREATE_TABLE();
   }, []);
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
 
   const handleAddUser = () => {
     ADD_USER();
@@ -29,9 +26,9 @@ const Add = () => {
     setFilePath({});
     // console.log(name, filePath.uri);
   };
-  const handleShowUser = () => {
-    FETCH_USERS();
-  };
+  // const handleShowUser = () => {
+  //   FETCH_USERS();
+  // };
   const CREATE_TABLE = () => {
     let query =
       'CREATE TABLE IF NOT EXISTS Users(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, imageUri TEXT)';
@@ -56,26 +53,6 @@ const Add = () => {
         [name, filePath.uri],
         (tx, res) => {
           console.log('User Added');
-        },
-        error => {
-          console.log('ERROR');
-        },
-      );
-    });
-  };
-  const FETCH_USERS = () => {
-    let query = `SELECT * FROM Users`;
-    db.transaction(txn => {
-      txn.executeSql(
-        query,
-        [],
-        (tx, res) => {
-          let resultsSet = [];
-          for (let i = 0; i < res.rows.length; ++i) {
-            let record = res.rows.item(i);
-            resultsSet.push(record);
-          }
-          setUsers(resultsSet);
         },
         error => {
           console.log('ERROR');
@@ -136,8 +113,8 @@ const Add = () => {
       <Button mode="contained" onPress={handleAddUser}>
         Add User
       </Button>
-      <Button mode="contained" onPress={handleShowUser}>
-        Show User
+      <Button mode="contained" onPress={() => navigation.navigate('List')}>
+        Move to List
       </Button>
     </View>
   );
