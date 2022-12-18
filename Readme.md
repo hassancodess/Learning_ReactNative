@@ -1,1 +1,6 @@
-# Learning React Native
+# Cart Task
+
+## Screenshots
+
+![Alt text](./preview1.png)
+![Alt text](./preview2.png)
