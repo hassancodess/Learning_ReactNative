@@ -124,6 +124,7 @@ const Add = ({navigation}) => {
       <Button mode="contained" onPress={handleAddUser} style={styles.button}>
         Add User
       </Button>
+      {/* For Debugging Purpose */}
       <Button
         mode="contained"
         onPress={() => navigation.navigate('List', {name: '2s'})}
