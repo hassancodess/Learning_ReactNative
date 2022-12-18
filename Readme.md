@@ -1,5 +1,5 @@
-# Image Picker
+# Image Picker Task
 
 ## Screenshots
 
-![Alt text](./preview.png)
+<!-- ![Alt text](./preview.png) -->
