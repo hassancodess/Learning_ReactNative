@@ -1,13 +1,18 @@
-import {StyleSheet, Text, View, FlatList, Image} from 'react-native';
 import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, FlatList} from 'react-native';
+import {Button, Card, Paragraph} from 'react-native-paper';
 import {openDatabase} from 'react-native-sqlite-storage';
-const db = openDatabase({name: 'ProductDatabase.db'});
+import {useIsFocused} from '@react-navigation/native';
+const db = openDatabase({name: 'Users.db'});
 
 const List = () => {
-  const [users, setUsers] = useState('');
+  const [users, setUsers] = useState([]);
+  const isFocused = useIsFocused();
   useEffect(() => {
-    FETCH_USERS();
-  }, []);
+    if (isFocused) {
+      FETCH_USERS();
+    }
+  }, [isFocused]);
   const FETCH_USERS = () => {
     let query = `SELECT * FROM Users`;
     db.transaction(txn => {
@@ -20,6 +25,7 @@ const List = () => {
             let record = res.rows.item(i);
             resultsSet.push(record);
           }
+          console.log(resultsSet);
           setUsers(resultsSet);
         },
         error => {
@@ -29,25 +35,46 @@ const List = () => {
     });
   };
   return (
-    <FlatList
-      data={users}
-      keyExtractor={(item, index) => index}
-      renderItem={({item}) => {
-        console.log(item.name);
-        return (
-          <View style={{margin: 20, backgroundColor: 'red'}}>
-            <Text style={{fontSize: 24}}>{item.name}</Text>
-            <Image source={{uri: item.imageUri}} style={styles.imageStyle} />
-          </View>
-        );
-      }}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={users}
+        keyExtractor={(item, index) => index}
+        renderItem={showItem}
+      />
+    </View>
   );
 };
-
+const showItem = ({item}) => {
+  return (
+    <Card style={styles.cardContainer}>
+      <Card.Title title={item.name} />
+      <Card.Content style={styles.cardContent}>
+        <Paragraph>{item.email}</Paragraph>
+      </Card.Content>
+      <Card.Cover source={{uri: item.imageUri}} />
+      <Card.Actions style={styles.cardActions}>
+        <Button mode="contained">Delete</Button>
+      </Card.Actions>
+    </Card>
+  );
+};
 export default List;
 
 const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 20,
+    marginVertical: 20,
+  },
+  cardContainer: {
+    padding: 10,
+    marginVertical: 10,
+  },
+  cardContent: {
+    marginBottom: 10,
+  },
+  cardActions: {
+    marginTop: 10,
+  },
   imageStyle: {
     width: 100,
     height: 200,
