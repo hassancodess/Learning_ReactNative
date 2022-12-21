@@ -2,17 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
 import {Button, Card, Paragraph} from 'react-native-paper';
 import {openDatabase} from 'react-native-sqlite-storage';
-import {useIsFocused} from '@react-navigation/native';
 const db = openDatabase({name: 'Users.db'});
 
 const List = () => {
   const [users, setUsers] = useState([]);
-  const isFocused = useIsFocused();
   useEffect(() => {
-    if (isFocused) {
-      FETCH_USERS();
-    }
-  }, [isFocused]);
+    FETCH_USERS();
+  }, []);
   const FETCH_USERS = () => {
     let query = `SELECT * FROM Users`;
     db.transaction(txn => {
@@ -25,7 +21,6 @@ const List = () => {
             let record = res.rows.item(i);
             resultsSet.push(record);
           }
-          console.log(resultsSet);
           setUsers(resultsSet);
         },
         error => {

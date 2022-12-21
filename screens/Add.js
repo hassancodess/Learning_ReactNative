@@ -127,9 +127,9 @@ const Add = ({navigation}) => {
       {/* For Debugging Purpose */}
       <Button
         mode="contained"
-        onPress={() => navigation.navigate('List', {name: '2s'})}
+        onPress={() => navigation.navigate('List')}
         style={styles.button}>
-        Refresh
+        Move to List
       </Button>
     </View>
   );

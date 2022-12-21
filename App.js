@@ -1,21 +1,26 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import Add from './screens/Add';
 import List from './screens/List';
 
-const Tab = createMaterialTopTabNavigator();
+const Stack = createStackNavigator();
+
 const App = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Add" screenOptions={{lazy: true}}>
-        <Tab.Screen name="Add" component={Add} options={{title: 'Add User'}} />
-        <Tab.Screen
+      <Stack.Navigator initialRouteName="Add">
+        <Stack.Screen
+          name="Add"
+          component={Add}
+          options={{title: 'Add User'}}
+        />
+        <Stack.Screen
           name="List"
           component={List}
           options={{title: 'Show Users'}}
         />
-      </Tab.Navigator>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
