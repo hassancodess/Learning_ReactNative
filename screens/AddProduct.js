@@ -1,30 +1,53 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, ToastAndroid} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 
 const AddProduct = () => {
   // IPv4(add yours);
-  const IP = '';
+  const IP = '192.168.100.80';
   // States
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [stock, setStock] = useState('');
   // Functions
   const handleAddProduct = async () => {
-    let formData = new FormData();
-    formData.append('title', title);
-    formData.append('price', price);
-    formData.append('stock', stock);
-    const response = await fetch(
-      `http://${IP}/ProductsAPI/api/products/addproductbymultipartrequest`,
-      {
-        method: 'POST',
-        body: formData,
-      },
-    );
-
-    const data = await response.json();
-    console.log(data);
+    // Add product using Multipart Request
+    // let formData = new FormData();
+    // formData.append('title', title);
+    // formData.append('price', price);
+    // formData.append('stock', stock);
+    // const response = await fetch(
+    //   `http://${IP}/ProductsAPI/api/products/addproductbymultipartrequest`,
+    //   {
+    //     method: 'POST',
+    //     body: formData,
+    //   },
+    // );
+    // const data = await response.json();
+    //  Add product using Object
+    // const response = await fetch(
+    //   `http://${IP}/ProductsAPI/api/products/addproductbyobject`,
+    //   {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       title: title,
+    //       price: price,
+    //       stock: stock,
+    //     }),
+    //   },
+    // );
+    // const data = await response.json();
+    // Add Product using Query String
+    // const response = await fetch(
+    //   `http://${IP}/ProductsAPI/api/products/addproductbyquerystring?title=${title}&price=${price}&stock=${stock}`,
+    //   {
+    //     method: 'POST',
+    //   },
+    // );
+    // const data = await response.json();
     setTitle('');
     setPrice('');
     setStock('');
