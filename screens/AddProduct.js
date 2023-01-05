@@ -41,13 +41,13 @@ const AddProduct = () => {
     // );
     // const data = await response.json();
     // Add Product using Query String
-    // const response = await fetch(
-    //   `http://${IP}/ProductsAPI/api/products/addproductbyquerystring?title=${title}&price=${price}&stock=${stock}`,
-    //   {
-    //     method: 'POST',
-    //   },
-    // );
-    // const data = await response.json();
+    const response = await fetch(
+      `http://${IP}/ProductsAPI/api/products/addproductbyquerystring?title=${title}&price=${price}&stock=${stock}`,
+      {
+        method: 'POST',
+      },
+    );
+    const data = await response.json();
     setTitle('');
     setPrice('');
     setStock('');
