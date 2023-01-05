@@ -4,7 +4,7 @@ import {Button, Card, Text} from 'react-native-paper';
 
 const ProductsList = ({navigation}) => {
   // IPv4(add yours)
-  const IP = '192.168.100.80';
+  const IP = '';
 
   // States START
   const [products, setProducts] = useState([]);

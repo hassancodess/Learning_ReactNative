@@ -4,7 +4,7 @@ import {Button, TextInput} from 'react-native-paper';
 
 const AddProduct = () => {
   // IPv4(add yours);
-  const IP = '192.168.100.80';
+  const IP = '';
   // States
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
