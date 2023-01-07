@@ -3,9 +3,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // Screens
 import Home from './screens/Home';
-import ProductsList from './screens/ProductsList';
-import AddProduct from './screens/AddProduct';
-import ProductDetails from './screens/ProductDetails';
+import Login from './screens/Login';
+import Register from './screens/Register';
 // Native Stack
 const Stack = createNativeStackNavigator();
 const App = () => {
@@ -13,9 +12,8 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="ProductsList" component={ProductsList} />
-        <Stack.Screen name="AddProduct" component={AddProduct} />
-        <Stack.Screen name="ProductDetails" component={ProductDetails} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Register} />
       </Stack.Navigator>
     </NavigationContainer>
   );
