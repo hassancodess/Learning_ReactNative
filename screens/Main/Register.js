@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, ToastAndroid} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 // Context
-import AuthContext from '../context/AuthContext';
+import AuthContext from '../../context/AuthContext';
 
 const Register = () => {
   const [name, setName] = useState();

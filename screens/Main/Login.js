@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, Text, View, ToastAndroid} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
-import AuthContext from '../context/AuthContext';
+import AuthContext from '../../context/AuthContext';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 const Login = () => {
@@ -23,7 +23,7 @@ const Login = () => {
   // Navigate to Home Screen after Button Click
   useEffect(() => {
     if (isAuth) {
-      navigation.navigate('Home');
+      navigation.navigate('UserNavigator');
     }
   }, [isAuth]);
   // Toggle Secure Text Entry
