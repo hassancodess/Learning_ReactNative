@@ -1,115 +1,100 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, Text, View, ToastAndroid} from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
+import {StyleSheet, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
-// Context
-import AuthContext from '../../context/AuthContext';
-
+import {Text, TextInput, Button} from 'react-native-paper';
 const Register = () => {
+  //   States
   const [name, setName] = useState();
   const [email, setEmail] = useState();
-  const [age, setAge] = useState();
   const [password, setPassword] = useState();
-  const [showPassword, setShowPassword] = useState(true);
-  // Context
-  const {createAccount} = useContext(AuthContext);
-  // Navigation
+  const [hidePassword, setHidePassword] = useState(true);
+  //   Navigation
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-
-  // Toggle Secure Text Entry
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-  // Calls createAccout method from AuthContext
-  const handleCreateAccount = async () => {
-    const res = await createAccount(name, email, age, password);
-    if (res) {
-      navigation.navigate('Login');
-      ToastAndroid.show('Account Created Successfully', ToastAndroid.SHORT);
-    } else {
-      ToastAndroid.show("Couldn't Create Account", ToastAndroid.SHORT);
-    }
-  };
-  //   // Clear State when in Focus - CASE: if users presses back button
+  //   IP
+  const IP = '192.168.100.80';
+  //   useEffect
   useEffect(() => {
-    if (isFocused) {
-      setEmail('');
-      setPassword('');
-    }
+    clearStates();
   }, [isFocused]);
-  return (
-    <View style={styles.container}>
-      <TextInput
-        label="Name"
-        style={styles.input}
-        value={name}
-        onChangeText={text => setName(text)}
-      />
-      <TextInput
-        label="Email"
-        style={styles.input}
-        value={email}
-        onChangeText={text => setEmail(text)}
-      />
-      <TextInput
-        label="Age"
-        style={styles.input}
-        value={age}
-        onChangeText={text => setAge(text)}
-      />
-      <TextInput
-        label="Password"
-        style={styles.input}
-        value={password}
-        onChangeText={text => setPassword(text)}
-        secureTextEntry={showPassword ? true : false}
-        right={
-          showPassword ? (
-            <TextInput.Icon icon="eye" onPress={toggleShowPassword} />
-          ) : (
-            <TextInput.Icon icon="eye-off" onPress={toggleShowPassword} />
-          )
-        }
-      />
-      {/* <TextInput
-        label="Confirm Password"
-        style={styles.input}
-        value={confirmPassword}
-        onChangeText={text => setConfirmPassword(text)}
-        secureTextEntry={showConfirmPassword ? true : false}
-        right={
-          showConfirmPassword ? (
-            <TextInput.Icon icon="eye" onPress={toggleShowConfirmPassword} />
-          ) : (
-            <TextInput.Icon
-              icon="eye-off"
-              onPress={toggleShowConfirmPassword}
-            />
-          )
-        }
-      /> */}
-      <View style={styles.textContainer}>
-        <Text
-          variant="labelMedium"
-          style={styles.text}
-          onPress={() => navigation.navigate('Login')}>
-          Already have an account? Login
-        </Text>
-      </View>
-      <Button
-        mode="contained"
-        buttonColor="#FFC93C"
-        style={styles.button}
-        onPress={handleCreateAccount}>
-        SignUp{' '}
-      </Button>
+  //   Utility Functions
+  const clearStates = () => {
+    setName('');
+    setEmail('');
+    setPassword('');
+  };
+  const toggleHidePassword = () => {
+    setHidePassword(!hidePassword);
+  };
+  const LoginScreenHandler = () => {
+    navigation.navigate('Login');
+  };
 
-      <Text>{name}</Text>
-      <Text>{email}</Text>
-      <Text>{password}</Text>
-      <Text>{age}</Text>
-    </View>
+  const registerHandler = async () => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+      }),
+    };
+
+    const response = await fetch(
+      `http://${IP}/FlowerAPITask/api/users/signup`,
+      requestOptions,
+    );
+    const data = await response.json();
+    console.log(data);
+  };
+  return (
+    <>
+      {/* Container */}
+      <View style={styles.container}>
+        {/* Input Container */}
+        <View style={styles.inputContainer}>
+          <TextInput
+            label="Name"
+            style={styles.input}
+            value={name}
+            onChangeText={text => setName(text)}
+          />
+          <TextInput
+            label="Email"
+            style={styles.input}
+            value={email}
+            onChangeText={text => setEmail(text)}
+          />
+          <TextInput
+            label="Password"
+            style={styles.input}
+            value={password}
+            secureTextEntry={hidePassword}
+            right={
+              hidePassword ? (
+                <TextInput.Icon icon="eye-off" onPress={toggleHidePassword} />
+              ) : (
+                <TextInput.Icon icon="eye" onPress={toggleHidePassword} />
+              )
+            }
+            onChangeText={text => setPassword(text)}
+          />
+        </View>
+        {/* Text Strip Container */}
+        <View style={styles.textContainer}>
+          <Text style={styles.text} onPress={LoginScreenHandler}>
+            Already have an account? Login
+          </Text>
+        </View>
+        {/* Button Container */}
+        <Button mode="contained" onPress={registerHandler}>
+          Register
+        </Button>
+      </View>
+    </>
   );
 };
 
@@ -118,24 +103,21 @@ export default Register;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0081C9',
-    padding: 20,
+    paddingTop: 12,
+    paddingHorizontal: 18,
+  },
+  inputContainer: {
+    marginBottom: 10,
   },
   input: {
     marginVertical: 10,
-    borderRadius: 6,
   },
   textContainer: {
-    marginVertical: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginVertical: 15,
+    flexDirection: 'row-reverse',
+    marginBottom: 20,
   },
   text: {
-    color: '#86E5FF',
     textDecorationLine: 'underline',
+    color: 'blue',
   },
 });

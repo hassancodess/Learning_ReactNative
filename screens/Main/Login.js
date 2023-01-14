@@ -1,79 +1,92 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, Text, View, ToastAndroid} from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
-import AuthContext from '../../context/AuthContext';
+import {StyleSheet, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {Text, TextInput, Button} from 'react-native-paper';
 
 const Login = () => {
+  // States
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [showPassword, setShowPassword] = useState(true);
-  const {login, isAuth, logout, userInfo} = useContext(AuthContext);
-  // Navigation
+  const [hidePassword, setHidePassword] = useState(true);
+  //   Navigation
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  // Clear State when in Focus - CASE: if users presses back button
+  //   IP
+  const IP = '192.168.100.80';
+  //   useEffect
   useEffect(() => {
-    if (isFocused) {
-      setEmail('');
-      setPassword('');
-      logout();
-    }
+    clearStates();
   }, [isFocused]);
-  // Navigate to Home Screen after Button Click
-  useEffect(() => {
-    if (isAuth) {
-      navigation.navigate('UserNavigator');
-    }
-  }, [isAuth]);
-  // Toggle Secure Text Entry
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
+  // Utility Functions
+  const clearStates = () => {
+    setEmail('');
+    setPassword('');
   };
+  const toggleHidePassword = () => {
+    setHidePassword(!hidePassword);
+  };
+  const registerScreenHandler = () => {
+    navigation.navigate('Register');
+  };
+  const loginHandler = async () => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    };
 
-  // Calls login method from AuthContext
-  const handleLogin = async () => {
-    await login(email, password);
+    const response = await fetch(
+      `http://${IP}/FlowerAPITask/api/users/login`,
+      requestOptions,
+    );
+    const data = await response.json();
+    console.log(data);
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        label="Email"
-        style={styles.input}
-        value={email}
-        onChangeText={text => setEmail(text)}
-      />
-      <TextInput
-        label="Password"
-        style={styles.input}
-        value={password}
-        onChangeText={text => setPassword(text)}
-        secureTextEntry={showPassword ? true : false}
-        right={
-          showPassword ? (
-            <TextInput.Icon icon="eye" onPress={toggleShowPassword} />
-          ) : (
-            <TextInput.Icon icon="eye-off" onPress={toggleShowPassword} />
-          )
-        }
-      />
-      <View style={styles.textContainer}>
-        <Text
-          variant="labelMedium"
-          style={styles.text}
-          onPress={() => navigation.navigate('Register')}>
-          Create an account
-        </Text>
+    <>
+      {/* Container */}
+      <View style={styles.container}>
+        {/* Input Container */}
+        <View style={styles.inputContainer}>
+          <TextInput
+            label="Email"
+            style={styles.input}
+            value={email}
+            onChangeText={text => setEmail(text)}
+          />
+          <TextInput
+            label="Password"
+            style={styles.input}
+            value={password}
+            secureTextEntry={hidePassword}
+            right={
+              hidePassword ? (
+                <TextInput.Icon icon="eye-off" onPress={toggleHidePassword} />
+              ) : (
+                <TextInput.Icon icon="eye" onPress={toggleHidePassword} />
+              )
+            }
+            onChangeText={text => setPassword(text)}
+          />
+        </View>
+        {/* Text Strip Container */}
+        <View style={styles.textContainer}>
+          <Text style={styles.text} onPress={registerScreenHandler}>
+            Create a new account
+          </Text>
+        </View>
+        {/* Button Container */}
+        <Button mode="contained" onPress={loginHandler}>
+          Login
+        </Button>
       </View>
-      <Button
-        mode="contained"
-        buttonColor="#FFC93C"
-        style={styles.button}
-        onPress={handleLogin}>
-        Login{' '}
-      </Button>
-    </View>
+    </>
   );
 };
 
@@ -82,24 +95,21 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0081C9',
-    padding: 20,
+    paddingTop: 12,
+    paddingHorizontal: 18,
+  },
+  inputContainer: {
+    marginBottom: 10,
   },
   input: {
     marginVertical: 10,
-    borderRadius: 6,
   },
   textContainer: {
-    marginVertical: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginVertical: 15,
+    flexDirection: 'row-reverse',
+    marginBottom: 20,
   },
   text: {
-    color: '#86E5FF',
     textDecorationLine: 'underline',
+    color: 'blue',
   },
 });

@@ -1,16 +1,33 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-// Provider
-import {AuthContextProvider} from './context/AuthContext';
-// Main Navigator
-import MainNavigator from './navigators/MainNavigator';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+// Screens
+import Login from './screens/Main/Login';
+import Register from './screens/Main/Register';
+
+const Stack = createNativeStackNavigator();
+
 const App = () => {
   return (
-    <AuthContextProvider>
-      <NavigationContainer>
-        <MainNavigator />
-      </NavigationContainer>
-    </AuthContextProvider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Register">
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
+
 export default App;
