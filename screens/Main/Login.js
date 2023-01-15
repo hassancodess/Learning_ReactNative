@@ -29,23 +29,27 @@ const Login = () => {
     navigation.navigate('Register');
   };
   const loginHandler = async () => {
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    };
+    try {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      };
 
-    const response = await fetch(
-      `http://${IP}/FlowerAPITask/api/users/login`,
-      requestOptions,
-    );
-    const data = await response.json();
-    console.log(data);
+      const response = await fetch(
+        `http://${IP}/FlowerAPITask/api/users/login`,
+        requestOptions,
+      );
+      const data = await response.json();
+      navigation.navigate('Dashboard');
+    } catch (error) {
+      console.log('ERROR: LoginHandler');
+    }
   };
 
   return (

@@ -31,24 +31,28 @@ const Register = () => {
   };
 
   const registerHandler = async () => {
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: name,
-        email: email,
-        password: password,
-      }),
-    };
+    try {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+        }),
+      };
 
-    const response = await fetch(
-      `http://${IP}/FlowerAPITask/api/users/signup`,
-      requestOptions,
-    );
-    const data = await response.json();
-    console.log(data);
+      const response = await fetch(
+        `http://${IP}/FlowerAPITask/api/users/signup`,
+        requestOptions,
+      );
+      const data = await response.json();
+      LoginScreenHandler();
+    } catch (error) {
+      console.log('ERROR: RegisterHandler');
+    }
   };
   return (
     <>
