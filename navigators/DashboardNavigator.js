@@ -14,7 +14,7 @@ const DashboardNavigation = () => {
   return (
     <Tab.Navigator
       initialRouteName="AddFlower"
-      screenOptions={({route}) => ({s
+      screenOptions={({route}) => ({
         tabBarIcon: ({focused, color}) => {
           let iconName;
 
