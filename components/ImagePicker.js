@@ -16,9 +16,7 @@ import {Button, Text} from 'react-native-paper';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
-const ImagePicker = () => {
-  const [filePath, setFilePath] = useState({});
-
+const ImagePicker = ({imageData, setImageData}) => {
   const requestCameraPermission = async () => {
     if (Platform.OS === 'android') {
       try {
@@ -96,7 +94,11 @@ const ImagePicker = () => {
         console.log('fileSize -> ', response.assets[0].fileSize);
         console.log('type -> ', response.assets[0].type);
         console.log('fileName -> ', response.assets[0].fileName);
-        setFilePath(response.assets[0]);
+        setImageData({
+          uri: response.assets[0].uri,
+          name: response.assets[0].fileName,
+          type: response.assets[0].type,
+        });
       });
     }
   };
@@ -122,20 +124,24 @@ const ImagePicker = () => {
         alert(response.errorMessage);
         return;
       }
-      console.log('Response again.. = ', response);
-      console.log('uri -> ', response.assets[0].uri);
-      console.log('width -> ', response.assets[0].width);
-      console.log('height -> ', response.assets[0].height);
-      console.log('fileSize -> ', response.assets[0].fileSize);
-      console.log('type -> ', response.assets[0].type);
-      console.log('fileName -> ', response.assets[0].fileName);
-      setFilePath(response.assets[0]);
+      //   console.log('Response again.. = ', response);
+      //   console.log('uri -> ', response.assets[0].uri);
+      //   console.log('width -> ', response.assets[0].width);
+      //   console.log('height -> ', response.assets[0].height);
+      //   console.log('fileSize -> ', response.assets[0].fileSize);
+      //   console.log('type -> ', response.assets[0].type);
+      //   console.log('fileName -> ', response.assets[0].fileName);
+      setImageData({
+        uri: response.assets[0].uri,
+        name: response.assets[0].fileName,
+        type: response.assets[0].type,
+      });
     });
   };
 
   return (
     <View style={styles.container}>
-      <Image source={{uri: filePath.uri}} style={styles.imageStyle} />
+      <Image source={{uri: imageData.uri}} style={styles.imageStyle} />
       <View style={styles.buttonContainer}>
         <Button
           mode="contained"

@@ -46,7 +46,13 @@ const Login = () => {
         requestOptions,
       );
       const data = await response.json();
-      navigation.navigate('Dashboard');
+      // navigation.navigate('Dashboard', {
+      //   screen: 'AddFlower',
+      //   params: {userID: data.id},
+      // });
+      navigation.navigate('Dashboard', {
+        userID: data.id,
+      });
     } catch (error) {
       console.log('ERROR: LoginHandler');
     }
