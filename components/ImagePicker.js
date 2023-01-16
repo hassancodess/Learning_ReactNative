@@ -7,7 +7,6 @@ import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
-  TouchableOpacity,
   Image,
   Platform,
   PermissionsAndroid,
@@ -164,7 +163,6 @@ export default ImagePicker;
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: 'red',
     alignItems: 'center',
   },
   buttonContainer: {
