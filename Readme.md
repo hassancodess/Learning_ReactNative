@@ -1,6 +1,6 @@
-# API Consumption Task
+# Flowers API Task
 
 ## Screenshots
 
-![Alt text](./preview-1.png)
-![Alt text](./preview-2.png)
+<!-- ![Alt text](./preview-1.png)
+![Alt text](./preview-2.png) -->
