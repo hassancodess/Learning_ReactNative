@@ -2,7 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {Text, TextInput, Button} from 'react-native-paper';
-
+import IP from '../../ip';
 const Login = () => {
   // States
   const [email, setEmail] = useState();
@@ -11,8 +11,7 @@ const Login = () => {
   //   Navigation
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  //   IP
-  const IP = '192.168.100.80';
+  // console.log(IP);
   //   useEffect
   useEffect(() => {
     clearStates();

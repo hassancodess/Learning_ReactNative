@@ -2,11 +2,13 @@ import {StyleSheet, View, FlatList} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useRoute} from '@react-navigation/native';
 import {Button, Card, Text} from 'react-native-paper';
+import IP from '../../ip';
+import {useIsFocused} from '@react-navigation/native';
 
 const FlowersList = () => {
   const [flowers, setFlowers] = useState([]);
-  const IP = '192.168.100.80';
   const route = useRoute();
+  const isFocused = useIsFocused();
   let userID = route.params.userID;
   console.log('FlowerList UserID', userID);
   useEffect(() => {
@@ -14,7 +16,7 @@ const FlowersList = () => {
       fetchFlowers();
       console.log('Fetched');
     }
-  }, []);
+  }, [isFocused]);
   const fetchFlowers = async () => {
     const response = await fetch(
       `http://${IP}/FlowerAPITask/api/flowers/GetUserFlowers?id=${userID}`,

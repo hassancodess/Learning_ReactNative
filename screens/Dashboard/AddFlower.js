@@ -3,12 +3,11 @@ import {StyleSheet, View, ToastAndroid} from 'react-native';
 import {Text, Button, TextInput} from 'react-native-paper';
 import ImagePicker from '../../components/ImagePicker';
 import {useRoute} from '@react-navigation/native';
-
+import IP from '../../ip';
 const AddFlower = () => {
   // States
   const [name, setName] = useState();
   const [imageData, setImageData] = useState({});
-  const IP = '192.168.100.80';
   // Navigation hooks
   const route = useRoute();
   let userID = route.params.userID;
